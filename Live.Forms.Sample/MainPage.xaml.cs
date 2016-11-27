@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using Live.Forms.iOS;
 
 namespace Live.Forms.Sample
 {
@@ -7,6 +8,8 @@ namespace Live.Forms.Sample
         public MainPage()
         {
             InitializeComponent();
+
+            this.Watch();
         }
     }
 }
