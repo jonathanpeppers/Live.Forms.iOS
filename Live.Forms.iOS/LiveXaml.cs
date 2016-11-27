@@ -13,7 +13,8 @@ namespace Live.Forms.iOS
     public class LiveXaml : ILiveXaml
     {
         private readonly string _directory;
-        private List<XamlTimer> _timers = new List<XamlTimer>();
+        private readonly List<XamlTimer> _timers = new List<XamlTimer>();
+        private MethodInfo _method;
 
         public LiveXaml(string directory)
         {
@@ -136,11 +137,21 @@ namespace Live.Forms.iOS
                         }
                     }
 
-                    //TODO: internal method, needs to be called from reflection
-                    //view.LoadFromXaml(xaml);
+                    LoadFromXaml(view, xaml);
                     UpdateNames(view);
                 }
             }
+        }
+
+        private void LoadFromXaml(Element view, string xaml)
+        {
+            if (_method == null)
+            {
+                var type = Type.GetType("Xamarin.Forms.Xaml.XamlLoader, Xamarin.Forms.Xaml");
+                _method = type.GetMethod("Load", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+            }
+
+            _method.Invoke(null, new object[] { view, xaml });
         }
 
         private void UpdateNames(Element view)
