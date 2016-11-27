@@ -8,6 +8,8 @@ namespace Live.Forms.Sample
         {
             InitializeComponent();
 
+            Live.Forms.iOS.Configuration.Directory = "/Users/jonathanpeppers/Desktop/Git/Live.Forms.iOS/Live.Forms.Sample/";
+
             MainPage = new MainPage();
         }
     }
