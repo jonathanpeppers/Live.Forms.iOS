@@ -148,7 +148,10 @@ namespace Live.Forms.iOS
             if (_method == null)
             {
                 var type = Type.GetType("Xamarin.Forms.Xaml.XamlLoader, Xamarin.Forms.Xaml");
-                _method = type.GetMethod("Load", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                _method = type
+                    .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                    .Where(m => m.Name == "Load" && m.GetParameters()[1].ParameterType == typeof(string))
+                    .First();
             }
 
             _method.Invoke(null, new object[] { view, xaml });

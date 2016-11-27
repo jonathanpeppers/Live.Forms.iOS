@@ -7,6 +7,7 @@ namespace Live.Forms.iOS
     {
         public static void Configure(this UIApplicationDelegate del, string directory)
         {
+            Configuration.Instance = new LiveXaml(directory);
         }
     }
 }
