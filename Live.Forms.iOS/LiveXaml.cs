@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace Live.Forms.iOS
 {
@@ -131,7 +133,7 @@ namespace Live.Forms.iOS
                         }
                     }
 
-                    XamlLoader.Load(view, xaml);
+                    view.LoadFromXaml(xaml);
                     UpdateNames(view);
                 }
             }
@@ -152,8 +154,9 @@ namespace Live.Forms.iOS
             }
         }
 
-        private class XamlTimer : Timer
+        private class XamlTimer
         {
+            private readonly Timer _timer;
             private DateTime _lastTime;
 
             public string Path { get; private set; }
@@ -166,18 +169,18 @@ namespace Live.Forms.iOS
 
             public event EventHandler FileChanged;
 
-            public XamlTimer(string path, Element view) : base(1000)
+            public XamlTimer(string path, Element view)
             {
                 Path = path;
                 Type = view.GetType();
                 Views = new List<WeakReference> { new WeakReference(view) };
 
                 _lastTime = new FileInfo(Path).LastWriteTimeUtc;
-                Elapsed += OnElapsed;
-                Start();
+
+                _timer = new Timer(OnElapsed, null, 1000, 1000);
             }
 
-            private void OnElapsed(object sender, EventArgs e)
+            private void OnElapsed(object state)
             {
                 DateTime time = new FileInfo(Path).LastWriteTimeUtc;
                 if (_lastTime != time)
