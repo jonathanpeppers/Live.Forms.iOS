@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Live.Forms.iOS;
 
 namespace Live.Forms.Sample.iOS
 {
@@ -12,6 +13,8 @@ namespace Live.Forms.Sample.iOS
     {
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            this.Configure("/Users/jonathanpeppers/Desktop/Git/Live.Forms.iOS/Live.Forms.Sample/");
+
             global::Xamarin.Forms.Forms.Init();
 
             LoadApplication(new Live.Forms.Sample.App());

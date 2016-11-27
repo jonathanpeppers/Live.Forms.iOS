@@ -1,8 +1,8 @@
 ﻿using System;
-using Xamarin.Forms;
 using System.Diagnostics;
+using Xamarin.Forms;
 
-namespace Live.Forms.iOS
+namespace Live.Forms
 {
     public static class Extensions
     {
@@ -16,7 +16,7 @@ namespace Live.Forms.iOS
                 () => { throw new NotSupportedException(NotSupported); }, 
                 () => { throw new NotSupportedException(NotSupported); });
 
-            //TODO: implementation
+            Configuration.Instance?.Watch(element);
         }
     }
 }

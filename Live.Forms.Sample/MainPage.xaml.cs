@@ -1,5 +1,5 @@
 ﻿using Xamarin.Forms;
-using Live.Forms.iOS;
+using Live.Forms;
 
 namespace Live.Forms.Sample
 {

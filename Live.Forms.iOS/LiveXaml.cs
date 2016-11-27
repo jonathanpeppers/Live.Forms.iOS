@@ -1,17 +1,26 @@
 ﻿using System;
-using System.Linq;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Threading;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Timers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Live.Forms.iOS
 {
-    internal static class LiveXaml
+    public class LiveXaml : ILiveXaml
     {
-        private static List<XamlTimer> _timers = new List<XamlTimer>();
+        private readonly string _directory;
+        private List<XamlTimer> _timers = new List<XamlTimer>();
 
-        public static void Watch(Element view)
+        public LiveXaml(string directory)
+        {
+            _directory = directory;
+        }
+
+        public void Watch(Element view)
         {
             string file;
             if (!string.IsNullOrEmpty(view.ClassId))
@@ -26,17 +35,11 @@ namespace Live.Forms.iOS
             Watch(view, file);
         }
 
-        private static void Watch(Element view, string file)
+        private void Watch(Element view, string file)
         {
             try
             {
-                string directory = Configuration.Directory;
-                if (string.IsNullOrEmpty(directory))
-                {
-                    throw new ArgumentNullException("Configuration.Directory");
-                }
-
-                string path = Directory.GetFiles(directory, file, SearchOption.AllDirectories).FirstOrDefault();
+                string path = Directory.GetFiles(_directory, file, SearchOption.AllDirectories).FirstOrDefault();
                 if (string.IsNullOrEmpty(path))
                 {
                     throw new Exception("Could not find XAML file named " + file + "!");
@@ -67,13 +70,13 @@ namespace Live.Forms.iOS
             }
         }
 
-        private static void OnError(Exception exc)
+        private void OnError(Exception exc)
         {
-            //TODO: on error?
-            //Console.WriteLine("Error in LiveXamlLoader: " + exc);
+            //TODO: better OnError?
+            Console.WriteLine("Error in Live.Forms.iOS: " + exc);
         }
 
-        private static void OnFileChanged(object sender, EventArgs e)
+        private void OnFileChanged(object sender, EventArgs e)
         {
             try
             {
@@ -104,7 +107,7 @@ namespace Live.Forms.iOS
             }
         }
 
-        private static void UpdateViews(XamlTimer timer, bool fromTimer, params Element[] views)
+        private void UpdateViews(XamlTimer timer, bool fromTimer, params Element[] views)
         {
             string xaml = File.ReadAllText(timer.Path);
             foreach (var view in views)
@@ -133,13 +136,14 @@ namespace Live.Forms.iOS
                         }
                     }
 
-                    view.LoadFromXaml(xaml);
+                    //TODO: internal method, needs to be called from reflection
+                    //view.LoadFromXaml(xaml);
                     UpdateNames(view);
                 }
             }
         }
 
-        private static void UpdateNames(Element view)
+        private void UpdateNames(Element view)
         {
             var type = view.GetType();
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
@@ -154,9 +158,8 @@ namespace Live.Forms.iOS
             }
         }
 
-        private class XamlTimer
+        private class XamlTimer : Timer
         {
-            private readonly Timer _timer;
             private DateTime _lastTime;
 
             public string Path { get; private set; }
@@ -169,18 +172,18 @@ namespace Live.Forms.iOS
 
             public event EventHandler FileChanged;
 
-            public XamlTimer(string path, Element view)
+            public XamlTimer(string path, Element view) : base(1000)
             {
                 Path = path;
                 Type = view.GetType();
                 Views = new List<WeakReference> { new WeakReference(view) };
 
                 _lastTime = new FileInfo(Path).LastWriteTimeUtc;
-
-                _timer = new Timer(OnElapsed, null, 1000, 1000);
+                Elapsed += OnElapsed;
+                Start();
             }
 
-            private void OnElapsed(object state)
+            private void OnElapsed(object sender, EventArgs e)
             {
                 DateTime time = new FileInfo(Path).LastWriteTimeUtc;
                 if (_lastTime != time)
