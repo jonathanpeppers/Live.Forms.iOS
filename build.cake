@@ -55,6 +55,7 @@ Task("NuGet-Package")
     {
         var settings   = new NuGetPackSettings
         {
+            Verbosity = NuGetVerbosity.Detailed,
             Version = version,
             Files = new [] 
             {
@@ -67,7 +68,21 @@ Task("NuGet-Package")
         NuGetPack("./Live.Forms.iOS.nuspec", settings);
     });
 
+Task("NuGet-Push")
+    .IsDependentOn("NuGet-Package")
+    .Does(() =>
+    {
+        var apiKey = TransformTextFile ("./.nugetapikey").ToString();
+
+        NuGetPush("./nuget/Live.Forms.iOS." + version + ".nupkg", new NuGetPushSettings 
+        {
+            Verbosity = NuGetVerbosity.Detailed,
+            Source = "nuget.org",
+            ApiKey = apiKey
+        });
+    });
+
 Task("Default")
-    .IsDependentOn("NuGet-Package");
+    .IsDependentOn("NuGet-Push");
 
 RunTarget(target);
