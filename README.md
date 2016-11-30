@@ -1,7 +1,7 @@
 # Live.Forms.iOS
 Xamarin.Forms live XAML reloading (iOS only)
 
-[Available on NuGet](https://www.nuget.org/packages/Live.Forms.iOS)
+[Available on NuGet](https://www.nuget.org/packages/Live.Forms.iOS). You will need to install this package in your Forms PCL project as well as your main iOS project.
 
 Currently this is a work in progress. The idea is simple: iOS apps can break out of the simulator and watch files on your machine. We can watch XAML files and reload when you save (live at runtime).
 
