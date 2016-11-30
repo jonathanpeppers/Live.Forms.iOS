@@ -7,8 +7,6 @@ namespace Live.Forms.Sample
         public MainPage()
         {
             InitializeComponent();
-
-            this.Watch();
         }
     }
 }
