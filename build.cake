@@ -13,7 +13,7 @@ var dirs = new[]
     Directory("./Live.Forms.iOS/bin") + Directory(configuration),
 };
 string sln = "./Live.Forms.iOS.sln";
-string version = "0.1.0.0";
+string version = "0.1.1.0";
 
 Task("Clean")
     .Does(() =>
@@ -59,8 +59,8 @@ Task("NuGet-Package")
             Version = version,
             Files = new [] 
             {
-                new NuSpecContent { Source =  dirs.Last() + File("Live.Forms.dll"), Target = "lib/netstandard1.1" },
-                new NuSpecContent { Source =  dirs.Last() + File("Live.Forms.iOS.dll"), Target = "lib/xamarinios" },
+                new NuSpecContent { Source =  dirs.Last() + File("Live.Forms.dll"), Target = "lib/portable-net45+win8+wpa81+wp8" },
+                new NuSpecContent { Source =  dirs.Last() + File("Live.Forms.iOS.dll"), Target = "lib/Xamarin.iOS10" },
             },
             OutputDirectory = "./nuget"
         };

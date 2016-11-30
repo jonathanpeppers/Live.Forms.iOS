@@ -15,7 +15,7 @@
       <releaseNotes>Initial Release</releaseNotes>
       <tags>Xamarin Xamarin.Forms iOS</tags>
       <dependencies>
-         <dependency id="Xamarin.Forms" version="2.3" />
+         <dependency id="Xamarin.Forms" version="2.3.0.107" />
       </dependencies>
    </metadata>
 </package>
