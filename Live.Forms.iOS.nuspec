@@ -8,7 +8,7 @@
       <title>Live.Forms.iOS</title>
       <description>Xamarin.Forms live XAML reloading (iOS only)</description>
       <summary>Xamarin.Forms live XAML reloading (iOS only)</summary>
-      <licenseUrl>https://raw.githubusercontent.com/jonathanpeppers/Live.Forms.iOS/LICENSE.md</licenseUrl>
+      <licenseUrl>https://raw.githubusercontent.com/jonathanpeppers/Live.Forms.iOS/master/LICENSE</licenseUrl>
       <projectUrl>https://github.com/jonathanpeppers/Live.Forms.iOS/</projectUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
       <copyright>Jonathan Peppers 2016</copyright>
