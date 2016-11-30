@@ -113,7 +113,7 @@ namespace Live.Forms.iOS
             string xaml = File.ReadAllText(timer.Path);
             foreach (var view in views)
             {
-                if (fromTimer && view.Parent == null)
+                if (fromTimer && !(view is Application) && view.Parent == null)
                 {
                     //We will let WeakReference clean this up
                     continue;
@@ -135,6 +135,19 @@ namespace Live.Forms.iOS
                         {
                             layout.Children.Clear();
                         }
+                    }
+
+                    //Resources
+                    var visual = view as VisualElement;
+                    if (visual != null && visual.Resources != null)
+                    {
+                        visual.Resources.Clear();
+                    }
+
+                    var application = view as Application;
+                    if (application != null && application.Resources != null)
+                    {
+                        application.Resources.Clear();
                     }
 
                     LoadFromXaml(view, xaml);
