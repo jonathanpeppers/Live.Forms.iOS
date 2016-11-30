@@ -10,10 +10,11 @@ var dirs = new[]
 {
     Directory("./nuget"),
     Directory("./Live.Forms/bin") + Directory(configuration),
+    Directory("./Live.Forms.Fody/bin") + Directory(configuration),
     Directory("./Live.Forms.iOS/bin") + Directory(configuration),
 };
 string sln = "./Live.Forms.iOS.sln";
-string version = "0.1.1.0";
+string version = "0.1.1.2";
 
 Task("Clean")
     .Does(() =>
@@ -49,7 +50,7 @@ Task("Build")
         }
     });
 
-Task("NuGet-Package")
+Task("NuGet-Package-Live")
     .IsDependentOn("Build")
     .Does(() =>
     {
@@ -68,13 +69,39 @@ Task("NuGet-Package")
         NuGetPack("./Live.Forms.iOS.nuspec", settings);
     });
 
+Task("NuGet-Package-Fody")
+    .IsDependentOn("Build")
+    .Does(() =>
+    {
+        var settings   = new NuGetPackSettings
+        {
+            Verbosity = NuGetVerbosity.Detailed,
+            Version = version,
+            Files = new [] 
+            {
+                new NuSpecContent { Source =  dirs.Reverse().Skip(1).First() + File("Live.Forms.Fody.dll"), Target = "" },
+            },
+            OutputDirectory = "./nuget"
+        };
+            
+        NuGetPack("./Live.Forms.Fody.nuspec", settings);
+    });
+
 Task("NuGet-Push")
-    .IsDependentOn("NuGet-Package")
+    //.IsDependentOn("NuGet-Package-Live")
+    .IsDependentOn("NuGet-Package-Fody")
     .Does(() =>
     {
         var apiKey = TransformTextFile ("./.nugetapikey").ToString();
 
-        NuGetPush("./nuget/Live.Forms.iOS." + version + ".nupkg", new NuGetPushSettings 
+        //NuGetPush("./nuget/Live.Forms.iOS." + version + ".nupkg", new NuGetPushSettings 
+        //{
+        //    Verbosity = NuGetVerbosity.Detailed,
+        //    Source = "nuget.org",
+        //    ApiKey = apiKey
+        //});
+
+        NuGetPush("./nuget/Live.Forms.Fody." + version + ".nupkg", new NuGetPushSettings 
         {
             Verbosity = NuGetVerbosity.Detailed,
             Source = "nuget.org",
