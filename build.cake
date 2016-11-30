@@ -1,22 +1,28 @@
 //#tool nuget:?package=NUnit.ConsoleRunner&version=3.4.0
 
-var target = Argument("target", "Default");
-var configuration = Argument("configuration", "Release");
+string target = Argument("target", "Default");
+string configuration = Argument("configuration", "Release");
 
 // Define directories.
-var buildDir = Directory("./src/Example/bin") + Directory(configuration);
+var dirs = new[] 
+{
+    Directory("./Live.Forms/bin") + Directory(configuration),
+    Directory("./Live.Forms.iOS/bin") + Directory(configuration),
+};
+string sln = "./Live.Forms.iOS.sln";
 
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectory(buildDir);
+    foreach (var dir in dirs)
+        CleanDirectory(dir);
 });
 
 Task("Restore-NuGet-Packages")
     .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore("./Live.Forms.iOS.sln");
+    NuGetRestore(sln);
 });
 
 Task("Build")
@@ -26,14 +32,18 @@ Task("Build")
     if(IsRunningOnWindows())
     {
       // Use MSBuild
-      MSBuild("./Live.Forms.iOS.sln", settings =>
-        settings.SetConfiguration(configuration));
+      MSBuild(sln, settings =>
+        settings
+            .WithProperty("Platform", new[] { "iPhoneSimulator" })
+            .SetConfiguration(configuration));
     }
     else
     {
       // Use XBuild
-      XBuild("./Live.Forms.iOS.sln", settings =>
-        settings.SetConfiguration(configuration));
+      XBuild(sln, settings =>
+        settings
+            .WithProperty("Platform", new[] { "iPhoneSimulator" })
+            .SetConfiguration(configuration));
     }
 });
 
