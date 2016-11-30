@@ -1,6 +1,8 @@
 # Live.Forms.iOS
 Xamarin.Forms live XAML reloading (iOS only)
 
+[Available on NuGet](https://www.nuget.org/packages/Live.Forms.iOS)
+
 Currently this is a work in progress. The idea is simple: iOS apps can break out of the simulator and watch files on your machine. We can watch XAML files and reload when you save (live at runtime).
 
 So for example, you have a page `MainPage.xaml.cs`:
@@ -36,5 +38,5 @@ public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 From here you can modify your XAML in `MainPage.xaml` and see changes reload live.
 
 # //TODO: 
-- Next step is NuGet package setup and builds
 - Need to eliminate need for `this.Configure("/path/to/your/folder/")` in iOS project, I think this will require MSBuild trickery to figure out the path to your csproj at runtime in the iOS simulator.
+- Look at using Fody potentially
