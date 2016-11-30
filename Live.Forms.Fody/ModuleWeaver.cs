@@ -47,7 +47,7 @@ public class ModuleWeaver
 
                     var processor = method.Body.GetILProcessor();
                     processor.Remove(processor.Body.Instructions.Last());
-                    processor.Emit(OpCodes.Ldobj, type);
+                    processor.Emit(OpCodes.Ldarg_0);
                     processor.Emit(OpCodes.Call, watchMethod);
                     processor.Emit(OpCodes.Ret);
                 }
