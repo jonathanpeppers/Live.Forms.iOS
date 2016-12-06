@@ -3,5 +3,5 @@
 		xmlns="http://xamarin.com/schemas/2014/forms" 
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 		x:Class="Live.Forms.Sample.MainPage">
-  <Label Text="Welcome to Xamarin Forms!" VerticalOptions="Center" HorizontalOptions="Center" />
+  <Label TextColor="{DynamicResource Color}" Text="Welcome to Live.Forms!" VerticalOptions="Center" HorizontalOptions="Center" />
 </ContentPage>
