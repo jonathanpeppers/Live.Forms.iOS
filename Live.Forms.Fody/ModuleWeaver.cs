@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Cecil.Rocks;
 
 public class ModuleWeaver
 {
@@ -13,14 +12,21 @@ public class ModuleWeaver
     public Action<string> LogInfo { get; set; }
 
     /// <summary>
-    /// NOTE: need to check DEBUG and skip the weaver otherwise
+    /// Will a list of all the msbuild constants. 
+    /// A copy of the contents of the $(DefineConstants). OPTIONAL
     /// </summary>
     public List<string> DefineConstants { get; set; }
 
     /// <summary>
-    /// NOTE: could to use this for main path of app
+    /// Will contain the full directory path of the target project. 
+    /// A copy of $(ProjectDir). OPTIONAL
     /// </summary>
     public string ProjectDirectoryPath { get; set; }
+
+    /// <summary>
+    /// Will contain the full path of the target assembly. OPTIONAL
+    /// </summary>
+    public string AssemblyFilePath { get; set; }
 
     public ModuleWeaver()
     {
@@ -40,14 +46,20 @@ public class ModuleWeaver
 
             if (Inherits(type, "Xamarin.Forms.Element"))
             {
+                var ctor = type.Methods.FirstOrDefault(m => m.IsConstructor && m.IsPublic);
                 var method = type.Methods.FirstOrDefault(m => m.Name == "InitializeComponent" && m.IsPrivate);
-                if (method != null)
+                if (ctor != null && method != null)
                 {
                     LogInfo(type.Name + " has InitializeComponent!");
+
+                    var doc = ctor.Body.Instructions[0].SequencePoint.Document;
+                    string xamlFile = doc.Url.Substring(0, doc.Url.Length - 3);
+                    LogInfo("Document found at: " + xamlFile);
 
                     var processor = method.Body.GetILProcessor();
                     processor.Remove(processor.Body.Instructions.Last());
                     processor.Emit(OpCodes.Ldarg_0);
+                    processor.Emit(OpCodes.Ldstr, xamlFile);
                     processor.Emit(OpCodes.Call, watchMethod);
                     processor.Emit(OpCodes.Ret);
                 }

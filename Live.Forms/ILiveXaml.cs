@@ -4,7 +4,7 @@ namespace Live.Forms
 {
     public interface ILiveXaml
     {
-        void Watch(Element element);
+        void Watch(string xamlPath, Element element);
     }
 }
 

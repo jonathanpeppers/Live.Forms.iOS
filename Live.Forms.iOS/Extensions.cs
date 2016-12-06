@@ -5,9 +5,9 @@ namespace Live.Forms.iOS
 {
     public static class Extensions
     {
-        public static void Configure(this UIApplicationDelegate del, string directory)
+        public static void Configure(this UIApplicationDelegate del)
         {
-            Configuration.Instance = new LiveXaml(directory);
+            Configuration.Instance = new LiveXaml();
         }
     }
 }

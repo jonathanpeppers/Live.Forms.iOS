@@ -6,50 +6,22 @@ using System.Linq;
 using System.Reflection;
 using System.Timers;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Live.Forms.iOS
 {
     public class LiveXaml : ILiveXaml
     {
-        private readonly string _directory;
         private readonly List<XamlTimer> _timers = new List<XamlTimer>();
         private MethodInfo _method;
 
-        public LiveXaml(string directory)
-        {
-            _directory = directory;
-        }
-
-        public void Watch(Element view)
-        {
-            string file;
-            if (!string.IsNullOrEmpty(view.ClassId))
-            {
-                file = view.ClassId.Split('.').Last() + ".xaml";
-            }
-            else
-            {
-                file = view.GetType().Name + ".xaml";
-            }
-            
-            Watch(view, file);
-        }
-
-        private void Watch(Element view, string file)
+        public void Watch(string xamlPath, Element view)
         {
             try
             {
-                string path = Directory.GetFiles(_directory, file, SearchOption.AllDirectories).FirstOrDefault();
-                if (string.IsNullOrEmpty(path))
-                {
-                    throw new Exception("Could not find XAML file named " + file + "!");
-                }
-
-                var timer = _timers.FirstOrDefault(t => t.Path == path);
+                var timer = _timers.FirstOrDefault(t => t.Path == xamlPath);
                 if (timer == null)
                 {
-                    timer = new XamlTimer(path, view);
+                    timer = new XamlTimer(xamlPath, view);
                     timer.FileChanged += OnFileChanged;
                     _timers.Add(timer);
                 }
