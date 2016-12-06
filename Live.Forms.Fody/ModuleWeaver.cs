@@ -36,7 +36,7 @@ public class ModuleWeaver
     public void Execute()
     {
         var typeSystem = ModuleDefinition.TypeSystem;
-        var liveForms = ModuleDefinition.ReadModule(Path.Combine("bin", "Release", "Live.Forms.dll"));
+        var liveForms = ModuleDefinition.ReadModule(Path.Combine(ProjectDirectoryPath, "bin", "Debug", "Live.Forms.dll"));
         var extensionsType = liveForms.Types.First(t => t.FullName == "Live.Forms.Extensions");
         var watchMethod = ModuleDefinition.Import(extensionsType.Methods.First(m => m.Name == "Watch"));
 
@@ -66,7 +66,7 @@ public class ModuleWeaver
             }
         }
 
-        LogInfo("WatchWeaver DONE!");
+        LogInfo("ModuleWeaver DONE!");
     }
 
     private bool Inherits(TypeDefinition type, string name)
