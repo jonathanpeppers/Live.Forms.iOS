@@ -72,6 +72,10 @@
       <Project>{A52CA99A-EA2D-4A99-8699-3BC9AFBFB035}</Project>
       <Name>Live.Forms</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Live.Forms.Xaml\Live.Forms.Xaml.csproj">
+      <Project>{535D694E-66F9-41D9-B43A-5D045218A849}</Project>
+      <Name>Live.Forms.Xaml</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -12,7 +12,6 @@ namespace Live.Forms.iOS
     public class LiveXaml : ILiveXaml
     {
         private readonly List<XamlTimer> _timers = new List<XamlTimer>();
-        private MethodInfo _method;
 
         public void Watch(string xamlPath, Element view)
         {
@@ -122,24 +121,10 @@ namespace Live.Forms.iOS
                         application.Resources.Clear();
                     }
 
-                    LoadFromXaml(view, xaml);
+                    view.LoadFromXaml(xaml);
                     UpdateNames(view);
                 }
             }
-        }
-
-        private void LoadFromXaml(Element view, string xaml)
-        {
-            if (_method == null)
-            {
-                var type = Type.GetType("Xamarin.Forms.Xaml.XamlLoader, Xamarin.Forms.Xaml");
-                _method = type
-                    .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
-                    .Where(m => m.Name == "Load" && m.GetParameters()[1].ParameterType == typeof(string))
-                    .First();
-            }
-
-            _method.Invoke(null, new object[] { view, xaml });
         }
 
         private void UpdateNames(Element view)
