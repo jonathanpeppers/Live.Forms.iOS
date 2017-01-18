@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.props" Condition="Exists('$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{073D05D0-7D82-48F2-B5A8-B7DE164C2FF9}</ProjectGuid>
+    <Description>Xamarin.Forms live XAML reloading (iOS only)</Description>
+    <PackageId>Live.Forms.iOS</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>jonathanpeppers</Authors>
+    <DevelopmentDependency>false</DevelopmentDependency>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Live.Forms.iOS</RootNamespace>
+    <UsePartialTypes>false</UsePartialTypes>
+    <AssemblyName>Live.Forms.iOS.NuGet</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>bin\Debug</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NuGet.Build.Packaging">
+      <Version>0.1.157-dev</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Live.Forms\Live.Forms.csproj">
+      <Project>{A52CA99A-EA2D-4A99-8699-3BC9AFBFB035}</Project>
+      <Name>Live.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Live.Forms.Core\Live.Forms.Core.csproj">
+      <Project>{35694A3F-8E8F-4CEB-A475-DC3D57828EA0}</Project>
+      <Name>Live.Forms.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Live.Forms.iOS\Live.Forms.iOS.csproj">
+      <Project>{9EE64D01-CB00-4343-BCC9-EDB947C76F7C}</Project>
+      <Name>Live.Forms.iOS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <Import Project="$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets" Condition="Exists('$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets')" />
+</Project>
