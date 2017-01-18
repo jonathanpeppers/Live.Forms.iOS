@@ -7,7 +7,7 @@
     <ProjectGuid>{9EE64D01-CB00-4343-BCC9-EDB947C76F7C}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Live.Forms.iOS</RootNamespace>
+    <RootNamespace>Live.Forms</RootNamespace>
     <AssemblyName>Live.Forms.iOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
   </PropertyGroup>
@@ -66,13 +66,8 @@
   <ItemGroup>
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LiveXaml.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Live.Forms\Live.Forms.csproj">
-      <Project>{A52CA99A-EA2D-4A99-8699-3BC9AFBFB035}</Project>
-      <Name>Live.Forms</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Live.Forms.Xaml\Live.Forms.Xaml.csproj">
       <Project>{535D694E-66F9-41D9-B43A-5D045218A849}</Project>
       <Name>Live.Forms.Xaml</Name>

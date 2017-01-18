@@ -38,10 +38,6 @@
       <Project>{A52CA99A-EA2D-4A99-8699-3BC9AFBFB035}</Project>
       <Name>Live.Forms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Live.Forms.Core\Live.Forms.Core.csproj">
-      <Project>{35694A3F-8E8F-4CEB-A475-DC3D57828EA0}</Project>
-      <Name>Live.Forms.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Live.Forms.iOS\Live.Forms.iOS.csproj">
       <Project>{9EE64D01-CB00-4343-BCC9-EDB947C76F7C}</Project>
       <Name>Live.Forms.iOS</Name>
