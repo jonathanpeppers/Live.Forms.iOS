@@ -35,8 +35,15 @@ public class ModuleWeaver
 
     public void Execute()
     {
+        string path = Path.Combine(ProjectDirectoryPath, "bin", "Debug", "Live.Forms.dll");
+        if (!File.Exists(path))
+        {
+            LogInfo("Cannot find: " + path);
+            return;
+        }
+
         var typeSystem = ModuleDefinition.TypeSystem;
-        var liveForms = ModuleDefinition.ReadModule(Path.Combine(ProjectDirectoryPath, "bin", "Debug", "Live.Forms.dll"));
+        var liveForms = ModuleDefinition.ReadModule(path);
         var extensionsType = liveForms.Types.First(t => t.FullName == "Live.Forms.Extensions");
         var watchMethod = ModuleDefinition.Import(extensionsType.Methods.First(m => m.Name == "Watch"));
 
