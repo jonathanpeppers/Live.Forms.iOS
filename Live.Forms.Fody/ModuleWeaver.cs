@@ -35,7 +35,7 @@ public class ModuleWeaver
 
     public void Execute()
     {
-        string path = Path.Combine(ProjectDirectoryPath, "bin", "Debug", "Live.Forms.dll");
+        string path = Path.Combine(ProjectDirectoryPath, "bin", "Debug", "Live.Forms.iOS.dll");
         if (!File.Exists(path))
         {
             LogInfo("Cannot find: " + path);
