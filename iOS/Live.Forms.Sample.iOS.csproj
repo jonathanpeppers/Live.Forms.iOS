@@ -134,10 +134,6 @@
       <Project>{9EE64D01-CB00-4343-BCC9-EDB947C76F7C}</Project>
       <Name>Live.Forms.iOS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Live.Forms\Live.Forms.csproj">
-      <Project>{A52CA99A-EA2D-4A99-8699-3BC9AFBFB035}</Project>
-      <Name>Live.Forms</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.3.168\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.3.168\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
